@@ -2,57 +2,69 @@ const { NotImplementedError } = require('../extensions/index.js');
 
 const { Node } = require('../extensions/list-tree.js');
 
-/**
-* Implement simple binary search tree according to task description
-* using Node from extensions
-*/
 class BinarySearchTree {
 
   constructor(){
-    let node = new Node();
-    this.rootNode = node;
+    this.rootNode = null;
   }
 
   root() {
-    // throw new NotImplementedError('Not implemented');
-    console.log(this.rootNode);
     return this.rootNode;
   }
 
   add(data) {
-    let node = new Node(data);
-    if (this.rootNode === null){
-      this.rootNode = node;
-    } else {
-      this.insertNewNode(this.rootNode, node);
+    this.rootNode = addNode(this.rootNode, data);
+
+    function addNode(node, data){
+      if (!node){
+        return new Node(data);
+      }
+      if (node.data === data){
+        return node;
+      }
+      if (node.data > data){
+        node.left = addNode(node.left, data);
+      } else {
+        node.right = addNode(node.right, data);
+      }
+      return node;
     }
   }
 
-  insertNewNode(initNode, newNode){
-    if (newNode.data > initNode.data){
-      if (initNode.right === null) {
-        initNode.right = newNode;
+  has(data) {
+    return walkThrough(this.rootNode, data);
+
+    function walkThrough(node, data){
+      if (!node){
+        return false;
+      }
+      if (node.data === data){
+        return true;
+      }
+      if (node.data > data){
+        return walkThrough(node.left, data);
       } else {
-        insertNewNode(initNode.right, newNode);
+        return walkThrough(node.right, data);
       }
     }
-    if (newNode.data < initNode.data){
-      if (initNode.left === null) {
-        initNode.left = newNode;
+  }
+
+  find(data) {
+    return walkThrough(this.rootNode, data);
+
+    function walkThrough(node, data){
+      if (!node){
+        return null;
+      }
+      if (node.data === data){
+        return node;
+      }
+      if (node.data > data){
+        return walkThrough(node.left, data);
       } else {
-        insertNewNode(initNode.left, newNode);
+        return walkThrough(node.right, data);
       }
     }
-  }
-
-  has(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
-
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
   }
 
   remove(/* data */) {
@@ -61,8 +73,22 @@ class BinarySearchTree {
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    // let min = this.rootNode.data;
+    // return walkThrough(this.rootNode, this.rootNode.data);
+
+    // function walkThrough(node, data){
+    //   if (!node){
+    //     return null;
+    //   }
+    //   if (node.data === data){
+    //     return node;
+    //   }
+    //   if (node.data > data){
+    //     return walkThrough(node.left, data);
+    //   } else {
+    //     return walkThrough(node.right, data);
+    //   }
+    // }
   }
 
   max() {

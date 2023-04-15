@@ -1,42 +1,82 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
-const { ListNode } = require('../extensions/list-node.js');
+const { Node } = require('../extensions/list-tree.js');
 
-class Queue {
+class BinarySearchTree {
+
   constructor(){
-    let rootElement = new ListNode();
-    this.rootElement = rootElement;
+    this.rootNode = null;
   }
 
-  getUnderlyingList() {
-    return this.rootElement;
+  root() {
+    return this.rootNode;
   }
 
-  enqueue(value) {
-    if (this.rootElement.value === undefined){
-      this.rootElement.value = value;
-    } else {
-      addElement(this.rootElement, value);
-    }
-    function addElement(element, value){
-      if (element.next === null){
-        let newEl = new ListNode();
-        newEl.value = value;
-        element.next = newEl;
+  add(data) {
+    this.rootNode = addNode(this.rootNode, data);
+
+    function addNode(node, data){
+      if (!node){
+        return new Node(data);
+      }
+      if (node.data === data){
+        return node;
+      }
+      if (node.data > data){
+        node.left = addNode(node.left, data);
       } else {
-        addElement(element.next, value);
+        node.right = addNode(node.right, data);
+      }
+      return node;
+    }
+  }
+
+  has(data) {
+    return walkThrough(this.rootNode, data);
+    
+    function walkThrough(node, data){
+      if (!node){
+        return false;
+      }
+      if (node.data === data){
+        return true;
+      }
+      if (node.data > data){
+        return walkThrough(node.left, data);
+      } else {
+        return walkThrough(node.right, data);
       }
     }
   }
 
-  dequeue() {
-    let head = this.rootElement.value;
-    this.rootElement = this.rootElement.next;
-    return head;
+  find(/* data */) {
+    throw new NotImplementedError('Not implemented');
+    // remove line with error and write your code here
+  }
+
+  remove(/* data */) {
+    throw new NotImplementedError('Not implemented');
+    // remove line with error and write your code here
+  }
+
+  min() {
+    throw new NotImplementedError('Not implemented');
+    // remove line with error and write your code here
+  }
+
+  max() {
+    throw new NotImplementedError('Not implemented');
+    // remove line with error and write your code here
   }
 }
 
-let que = new Queue();
-que.enqueue(2);
-console.log(que.rootElement);
-console.log(que.rootElement.next);
+let tree = new BinarySearchTree();
+tree.add(9);
+tree.add(14);
+tree.add(54);
+tree.add(2);
+tree.add(6);
+tree.add(8);
+tree.add(31);
+
+console.log(tree);
