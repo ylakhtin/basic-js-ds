@@ -73,27 +73,25 @@ class BinarySearchTree {
   }
 
   min() {
-    // let min = this.rootNode.data;
-    // return walkThrough(this.rootNode, this.rootNode.data);
-
-    // function walkThrough(node, data){
-    //   if (!node){
-    //     return null;
-    //   }
-    //   if (node.data === data){
-    //     return node;
-    //   }
-    //   if (node.data > data){
-    //     return walkThrough(node.left, data);
-    //   } else {
-    //     return walkThrough(node.right, data);
-    //   }
-    // }
+    let node = this.rootNode;
+    if (!node){
+      return null;
+    }
+    while (node.left){
+      node = node.left;
+    }
+    return node.data;
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    let node = this.rootNode;
+    if (!node){
+      return null;
+    }
+    while (node.right){
+      node = node.right;
+    }
+    return node.data;
   }
 }
 
