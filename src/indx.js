@@ -2,47 +2,41 @@ const { NotImplementedError } = require('../extensions/index.js');
 
 const { ListNode } = require('../extensions/list-node.js');
 
-function removeKFromList(l, k) {
-  //throw new NotImplementedError('Not implemented');
-  console.log('initial list - ', l);
-  console.log('next from root - ', l.next);
-  console.log('next from next from root - ', l.next.next);
-  console.log('value to remove - ', k);
-  l = checkList(l,k);
-  function checkList(list){
-    if (list.value === k){
-      list = list.next;
-    }
-    if (list.next !== null){
-        while(list.next.value === k){
-          if (l.next.next !== null){
-            list.next = l.next.next;
-          } else {
-            list.next = null;
-          }
-        }
-        checkList(list.next);
-    }
-    return list;
+class Queue {
+  constructor(){
+    let rootElement = new ListNode();
+    this.rootElement = rootElement;
   }
-  return l;
+
+  getUnderlyingList() {
+    return this.rootElement;
+  }
+
+  enqueue(value) {
+    if (this.rootElement.value === undefined){
+      this.rootElement.value = value;
+    } else {
+      addElement(this.rootElement, value);
+    }
+    function addElement(element, value){
+      if (element.next === null){
+        let newEl = new ListNode();
+        newEl.value = value;
+        element.next = newEl;
+      } else {
+        addElement(element.next, value);
+      }
+    }
+  }
+
+  dequeue() {
+    let head = this.rootElement.value;
+    this.rootElement = this.rootElement.next;
+    return head;
+  }
 }
 
-module.exports = {
-  removeKFromList
-};
-
-let sp1 = new ListNode();
-let sp2 = new ListNode();
-let sp3 = new ListNode();
-sp1.value = 1;
-sp2.value = 2;
-sp3.value = 2;
-sp2.next = sp3;
-sp1.next = sp2;
-const fin = removeKFromList(sp1, 2);
-console.log('------------');
-console.log('final - ', fin);
-console.log('fin', fin);
-console.log('fin.next ', fin.next);
-console.log('fin.last ', fin.next.next);
+let que = new Queue();
+que.enqueue(2);
+console.log(que.rootElement);
+console.log(que.rootElement.next);

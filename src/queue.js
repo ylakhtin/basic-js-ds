@@ -13,7 +13,7 @@ class Queue {
   }
 
   enqueue(value) {
-    if (this.rootElement.value === null){
+    if (this.rootElement.value === undefined){
       this.rootElement.value = value;
     } else {
       addElement(this.rootElement, value);
